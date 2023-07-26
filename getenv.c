@@ -27,7 +27,7 @@ int env_cmd(data_t *data)
 }
 
 /**
- * get_var_env - this function gets the value of an env variable
+ * _getenv - this function gets the value of an env variable
  * @data: parameter struct
  * @name: environment variable name
  * Return: returns the value of the environment

@@ -7,7 +7,7 @@
  * Return: returns 0 on success else 1 on error
  */
 
-int main(int argc, char **argv)
+int main(int argc, char *argv[])
 {
 	data_t data[] = { DATA_INIT };
 	int fd = 2;
@@ -32,11 +32,11 @@ int main(int argc, char **argv)
 			}
 			return (EXIT_FAILURE);
 		}
-		data[0].readfd = fd;
+		data->readfd = fd;
 	}
-	build_env_list(&data[0]);
-	read_log(&data[0]);
-	hsh(&data[0], argv);
+	build_env_list(data);
+	read_log(data);
+	hsh(data, argv);
 
 	return (EXIT_SUCCESS);
 }

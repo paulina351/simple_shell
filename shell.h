@@ -28,6 +28,28 @@
 #define USE_GETLINE 0
 #define CREATE_TRUNC_RW (O_CREAT | O_TRUNC | O_RDWR)
 
+#define DATA_INIT \
+{ \
+	NULL, \
+	NULL, \
+	NULL, \
+	NULL, \
+	0, \
+	NULL, \
+	NULL, \
+	0, \
+	NULL, \
+	0, \
+	0, \
+	NULL, \
+	0, \
+	0, \
+	0, \
+	NULL, \
+	0, \
+	0 \
+}
+
 extern char **environ;
 
 /**
@@ -43,7 +65,7 @@ typedef struct liststr
 	struct liststr *next;
 } list_t;
 
-/*
+/**
 * struct data - struct for passing data to functions
 * @alias: the alias node
 * @arg: a string generated from getline containing arguements
@@ -63,6 +85,7 @@ typedef struct liststr
 * @path: a string path for the current command
 * @readfd: the fd from which to read line input
 * @status: the return status of the last exec'd command
+* Description: data holder
 */
 typedef struct data
 {
@@ -86,9 +109,6 @@ typedef struct data
 	int status;
 } data_t;
 
-#define DATA_INIT \
-{NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, \
-0, 0, 0}
 /**
 * struct cmd - struct for builtin commands
 * @type: the type is a ptr to the command

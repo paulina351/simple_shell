@@ -1,7 +1,5 @@
 #include "shell.h"
 
-struct data;
-
 /**
  * hsh - the func runs the shell in interactive or non interactive mode
  * @data: the parameter and return data struct

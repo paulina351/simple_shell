@@ -126,6 +126,11 @@ int alias_cmd(data_t *data)
  */
 int help_cmd(data_t *data)
 {
+	char **array;
+
+	array = data->argv;
 	_puts("Help is not yet available for this program.\n");
+	if (0)
+		_puts(*array);
 	return (0);
 }
