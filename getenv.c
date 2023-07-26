@@ -32,7 +32,7 @@ int env_cmd(data_t *data)
  * @name: environment variable name
  * Return: returns the value of the environment
  */
-char *get_var_env(data_t *data, const char *name)
+char *_getenv(data_t *data, const char *name)
 {
 	list_t *node = data->env;
 	char *p;

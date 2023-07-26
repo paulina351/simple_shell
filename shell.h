@@ -27,21 +27,8 @@
 #define CONV_LOWERCASE 1
 #define USE_GETLINE 0
 #define CREATE_TRUNC_RW (O_CREAT | O_TRUNC | O_RDWR)
-#define DATA_INIT \
-{NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, \
-0, 0, 0}
-extern char **environ;
 
-/**
-* struct cmd - struct for builtin commands
-* @type: the type is a ptr to the command
-* @func: the func is a ptr to the builtin func
-*/
-typedef struct cmd
-{
-char *type;
-int (*func)(data_t *);
-} cmd_table;
+extern char **environ;
 
 /**
 * struct liststr - the struct is singly linked list
@@ -51,12 +38,12 @@ int (*func)(data_t *);
 */
 typedef struct liststr
 {
-int num;
-char *str;
-struct liststr *next;
+	int num;
+	char *str;
+	struct liststr *next;
 } list_t;
 
-/**
+/*
 * struct data - struct for passing data to functions
 * @alias: the alias node
 * @arg: a string generated from getline containing arguements
@@ -79,25 +66,39 @@ struct liststr *next;
 */
 typedef struct data
 {
-list_t *alias;
-list_t *env;
-list_t *log;
-char *arg;
-int argc;
-char **argv;
-char **cmd_buf;
-int cmd_buf_type;
-char **environ;
-int env_changed;
-int err_num;
-char *fname;
-unsigned int line_count;
-int linecount_flag;
-int logcount;
-char *path;
-int readfd;
-int status;
+	list_t *alias;
+	list_t *env;
+	list_t *log;
+	char *arg;
+	int argc;
+	char **argv;
+	char **cmd_buf;
+	int cmd_buf_type;
+	char **environ;
+	int env_changed;
+	int err_num;
+	char *fname;
+	unsigned int line_count;
+	int linecount_flag;
+	int logcount;
+	char *path;
+	int readfd;
+	int status;
 } data_t;
+
+#define DATA_INIT \
+{NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, \
+0, 0, 0}
+/**
+* struct cmd - struct for builtin commands
+* @type: the type is a ptr to the command
+* @func: the func is a ptr to the builtin func
+*/
+typedef struct cmd
+{
+	char *type;
+	int (*func)(data_t *);
+} cmd_table;
 
 /**_cmd.c**/
 int cd_cmd(data_t *data);
@@ -149,11 +150,11 @@ void free_data(data_t *data, int all);
 char **get_env(data_t *data);
 int env_cmd(data_t *data);
 int build_env_list(data_t *data);
-char *get_var_env(data_t *data, const char *name);
+char *_getenv(data_t *data, const char *name);
 
 /**getline.c**/
 ssize_t read_buffer(data_t *data, char *buff, size_t *i);
-int cus_getline(data_t *data, char **ptr, size_t *len);
+int cus_getline(data_t *data, char **ptr, size_t *size);
 
 /**handler**/
 ssize_t input_buffer(data_t *data, char **buff, size_t *len);

@@ -8,13 +8,13 @@
  */
 void print_error(data_t *data, char *str_err)
 {
-	_err_puts(data->fname);
-	_err_puts(": ");
-	print_deci(data->line_count, STDERR_FILENO);
-	_err_puts(": ");
-	_err_puts(data->argv[0]);
-	_err_puts(": ");
-	_err_puts(str_err);
+	err_puts(data->fname);
+	err_puts(": ");
+	prints_deci(data->line_count, STDERR_FILENO);
+	err_puts(": ");
+	err_puts(data->argv[0]);
+	err_puts(": ");
+	err_puts(str_err);
 }
 
 /**

@@ -9,10 +9,9 @@
 
 int main(int argc, char **argv)
 {
-	data_t data[] = { DATA_INIT};
+	data_t data[] = { DATA_INIT };
 	int fd = 2;
 
-	fd += 3;
 	if (argc == 2)
 	{
 		fd = open(argv[1], O_RDONLY);
@@ -33,10 +32,11 @@ int main(int argc, char **argv)
 			}
 			return (EXIT_FAILURE);
 		}
-		data->readfd = fd;
+		data[0].readfd = fd;
 	}
-	build_env_list(data);
-	read_log(data);
-	hsh(data, argv);
+	build_env_list(&data[0]);
+	read_log(&data[0]);
+	hsh(&data[0], argv);
+
 	return (EXIT_SUCCESS);
 }

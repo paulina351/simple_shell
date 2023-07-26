@@ -1,5 +1,7 @@
 #include "shell.h"
 
+struct data;
+
 /**
  * hsh - the func runs the shell in interactive or non interactive mode
  * @data: the parameter and return data struct
@@ -12,7 +14,7 @@ int hsh(data_t *data, char **argv)
 	ssize_t ret = 0;
 	int builtin = 0;
 
-	while (ret != -1 & builtin != -2)
+	while (ret != -1 && builtin != -2)
 	{
 		clear_data(data);
 		if (is_interactive(data))
@@ -23,7 +25,7 @@ int hsh(data_t *data, char **argv)
 		ret = get_input(data);
 		if (ret != -1)
 		{
-			set_data(data, av);
+			set_data(data, argv);
 			builtin = find_commands(data);
 			if (builtin == -1)
 			{
@@ -38,7 +40,7 @@ int hsh(data_t *data, char **argv)
 	}
 	write_log(data);
 	free_data(data, 1);
-	if (!is_interactive(data) & data->status)
+	if (!is_interactive(data) && data->status)
 		exit(data->status);
 	if (builtin == -2)
 	{
@@ -59,7 +61,7 @@ int find_commands(data_t *data)
 {
 	int i, builtin = -1;
 
-	cmd_table builtin_cmd[] = {
+	cmd_table builtintbl[] = {
 		{"exit", exit_cmd},
 		{"cd", cd_cmd},
 		{"log", log_cmd},
@@ -70,15 +72,14 @@ int find_commands(data_t *data)
 		{"unsetenv", unsetenv_cmd},
 		{NULL, NULL}
 	};
-	for (i = 0; builtin_cmd[i].type; i++)
-	{
-		if (_strcmp(data->argv[0], builtin_cmd[i].type) == 0)
+
+	for (i = 0; builtintbl[i].type; i++)
+		if (_strcmp(data->argv[0], builtintbl[i].type) == 0)
 		{
 			data->line_count++;
-			builtin = builtin_cmd[i].func(data);
+			builtin = builtintbl[i].func(data);
 			break;
 		}
-	}
 	return (builtin);
 }
 
@@ -113,7 +114,7 @@ void find_cmd(data_t *data)
 	else
 	{
 		if ((is_interactive(data) || _getenv(data, "PATH=>")
-					|| data->argv[0][0] == '/')  is_cmd(data, data->argv[0]))
+					|| data->argv[0][0] == '/') && is_cmd(data, data->argv[0]))
 		{
 			fork_cmd(data);
 		}

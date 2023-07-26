@@ -85,14 +85,14 @@ int is_chain_delim(data_t *data, char *buf, size_t *p)
 /**
 * is_valid_chain - the func checks if the chain is valid
 * @data: the parameter struct
+* @buff: the buffer
 * @p: pointer to current position in the buffer
 * @i: starting position
 * @len: length of buff
-* @buff: the buffer
 * Return: returns NULL
 */
 
-void is_valid_chain(data_t *data, size_t *p, size_t i, size_t len, char *buff)
+void is_valid_chain(data_t *data, char *buff, size_t *p, size_t i, size_t len)
 {
 	size_t j = *p;
 

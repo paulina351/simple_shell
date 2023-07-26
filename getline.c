@@ -25,10 +25,10 @@ ssize_t read_buffer(data_t *data, char *buff, size_t *s)
  * cus_getline - the func gets the next line from standard input
  * @data: parameter struct
  * @ptr: pointer to address
- * @len: length of buffer
+ * @size: length of buffer
  * Return: returns string
  */
-int cus_getline(data_t *data, char **ptr, size_t *len)
+int cus_getline(data_t *data, char **ptr, size_t *size)
 {
 	static char buf[BUF_SIZE];
 	static size_t i, len;
@@ -37,8 +37,8 @@ int cus_getline(data_t *data, char **ptr, size_t *len)
 	char *p = NULL, *new_p = NULL, *c;
 
 	p = *ptr;
-	if (p && len)
-		str = *len;
+	if (p && size)
+		str = *size;
 	if (i == len)
 		i = len = 0;
 
@@ -48,7 +48,7 @@ int cus_getline(data_t *data, char **ptr, size_t *len)
 
 	c = cus_strchr(buf + i, '\n');
 	k = c ? 1 + (unsigned int)(c - buf) : len;
-	new_p = _realloc(p, str, str ? str + k : k + 1);
+	new_p = cus_realloc(p, str, str ? str + k : k + 1);
 	if (!new_p)
 		return (p ? free(p), -1 : -1);
 
@@ -58,8 +58,11 @@ int cus_getline(data_t *data, char **ptr, size_t *len)
 		cus_strncpy(new_p, buf + i, k - i + 1);
 
 	str += k - i;
-	i = c ? k + 1 : k;
-	*ptr = new_p;
-	*len = str;
-	return (k ? k : r);
+	i = k;
+	p = new_p;
+
+	if (size)
+		*size = str;
+	*ptr = p;
+	return (str);
 }
