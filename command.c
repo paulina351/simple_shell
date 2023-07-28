@@ -137,18 +137,18 @@ void fork_cmd(data_t *data)
 	pid_child = fork();
 	if (pid_child == -1)
 	{
-		perror("Process Error:");
+		perror("Process Error: ");
 		return;
 	}
 	if (pid_child == 0)
 	{
-		if (execve(data->path, data->argv, get_env(data)) == -1)
-		{
-			free_data(data, 1);
-			if (errno == EACCES)
-				exit(126);
-			exit(1);
-		}
+			if (execve(data->path, data->argv, get_env(data)) == -1)
+			{
+				free_data(data, 1);
+				if (errno == EACCES)
+					exit(126);
+				exit(1);
+			}
 	}
 	else
 	{
